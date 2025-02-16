@@ -54,14 +54,14 @@
 		To rasterize triangles, you need to take a pixel and determine if it is within the bounds defined by the 3 points
 		of the triangle.
 
-		<br>
+		<br><br>
 
 		<b>My approach:</b> Initially, I wanted to figure out how to go about this, so I just sampled every pixel from (0,0) to (width, height).
 		From here, I knew I had to have a way of determining whether or not this pixel was within the traingle defined by the 3 provided points.
 		To do this, I had to do 3 line tests -- I did this in a CCW direction. The lines for the line tests were P0 to P1 then P1 to P2 then P2 to P0. I sampled the point from the center of the pixel, so x + 0.5, y + 0.5.
 		From here, I was able to use the fill_pixel function to color in the pixels that passed the line tests (were inside the triangle).
 		
-		<br>
+		<br><br>
 
 		<b>Improvements to my approach:</b> The first improvement I needed to do was to account for the case where the points are given in a CW fashion instead of CCW like my code assumes (this led to an issue with basic/test6.svg). 
 		To determine CW or CCW points, I decided to use the cross product of the vectors (between points 0 and 1 and 1 and 2), and the z component would tell me if the points were given CW or CCW.
@@ -71,6 +71,8 @@
 		To address this, I only checked the pixels that lied within the smallest and largest x value (bounded by 0 and width respectively) and smallest and largest y value (bounded by 0 and height respectively).
 		One issue I had with changing the pixels checked to only be the bounding box was when zooming in and out on the image, draw would sometimes crash due to a segfault error.
 		To fix this, I added in the bounds of 0 and height/width so I was never accessing memory out of scope. First I got the max of the points in the x direction, then took the min of that point or width. I did the same things for x min and y values.
+
+		<br><br>
 
 		<p>My outputs for basic rasterize_triangle</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
