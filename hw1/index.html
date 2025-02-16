@@ -51,7 +51,18 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		To rasterize triangles, you need to take a pixel and determine if it is within the bounds defined by the 3 points
+		of the triangle.
+
+		My approach: Initially, I wanted to figure out how to go about this, so I just sampled every pixel from (0,0) to (width, height).
+		From here, I knew I had to have a way of determining whether or not this pixel was within the traingle defined by the 3 provided points.
+		To do this, I had to do 3 line tests -- I did this in a CCW direction. The lines for the line tests were P0 to P1 then P1 to P2 then P2 to P0. I sampled the point from the center of the pixel, so x + 0.5, y + 0.5.
+		From here, I was able to use the fill_pixel function to color in the pixels that passed the line tests (were inside the triangle).
+		
+		Improvements to my approach: Determining CW or CCW, then changing points. Restricting the bounding box.
+		
+		Some issues I had: accessing memory out of scope, causing bus errors and sigfaults. Fixing this, doing
+		the max/min thing.
 
 		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
