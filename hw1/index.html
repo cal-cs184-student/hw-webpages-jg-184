@@ -127,7 +127,59 @@
 		</div> -->
 		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<b>Supersampling Algorithm</b> <br>
+		First, my sample buffer was adjusted to be size width * height * sampling_rate. This was because
+		when storing the supersampling samples, we have width * height pixels, which are further subsampled into sampling_rate pixels each.
+		So this just adjusts the sample buffer to be the correct size.
+		<br>
+		Next, I go into my rasterize_triangle function. Here, I adjust the vertices to be counter-clockwise as in task 1.
+		Then, I had to adjust my logic. 
+		Initially, my pixel coordinate system mapped 1:1 into the cartesian coordinate system (where the triangle's vertices are defined).
+		So I could just assume pixel (0, 0) had cartesian coordinate (0,0). However, this is not the case here.
+		I first defined my bounding box in cartesian coordinates, then got the pixel in the frame buffer that would correspond to this place in cartesian coordinates, and finally convert that into both the supersampled buffer pixel coordinate. [Cartesian (x,y) -> Frame-Buffer (x,y) -> Supersample-Buffer (x * sqrt(rate), y *sqrt(rate)).
+		Then I would do the actual supersampling. Starting with (x,y) in Cartesian coordinates, I would then sample (x + (1/(2 *sqrt(rate))) + (i/sqrt(rate)), y + (1/(2 *sqrt(rate))) + (j/sqrt(rate))), for i, j = 0 to sqrt(rate). So, we would sample sqrt(rate) by sqrt(rate) pixels for each pixel in the frame-buffer (or the case when rate = 1).
+		From here, one of the hardest challenges I had with this project, which took a lot of debugging to overcome was indexing into the sample_buffer, instead of using fill_pixel I ended up using my own implementation.
+		<br>
+		Finally, I had to resolve the supersampled buffer to the frame.
+		To do this, I essentially traversed block by block throughout the sample_buffer filled up previously and averaged the color values of the pixels in the (sqrt(rate) x sqrt(rate)) box in the supersampled buffer.
+		<br>
+		Additional Notes/Challenges: I also changed the fill_pixel function because the box was duplicating with drawing lines and pixels. I needed to adjust the indexing in the sample_buffer.
+		I faced a lot of challenges with this problem, the majority being through indexing the sample buffer and understanding the differences between coordinate systems.
+		<br><br>
+
+		Supersampling is useful because it allows us to antialias our triangles, reducing an issue seen here with Jaggies.
+		Getting the intermediate color values for pixels by supersampling allows images to appear clearer and more visually appealing overall, without the harsh lines Jaggies produce. 
+		To the rasterization pipeline, I had to clear the buffers whenever adjusting the sampling rate. I also dynamically changed the sample buffer size to accomodate the supersampling samples.
+
+		<br><br>
+		Below, the same image is supersampled with different sampling rates from 1 to 16. The image with rate 1 has Jaggies and does not look great, especially in thinner corners of the triangles.
+		However, as the sample rate is increased, the pixels take on more intermediate values, allowing for Jaggies to decrease and make smoother images overall!
+
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="screenshot_2-18_23-17-35.png" width="400px"/>
+				  <figcaption>Sample Rate = 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="screenshot_2-18_23-17-36.png" width="400px"/>
+					<figcaption>Sample Rate = 4</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="screenshot_2-18_23-17-37.png" width="400px"/>
+				  <figcaption>Sample Rate = 9</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="screenshot_2-18_23-17-39.png" width="400px"/>
+					<figcaption>Sample Rate = 16</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Task 3: Transforms</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
