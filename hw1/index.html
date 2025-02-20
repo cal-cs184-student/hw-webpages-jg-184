@@ -227,29 +227,34 @@
 		</div>
 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-		
-		
+		In my understanding, pixel sampling is assigning colors to pixels, here these colors are obtained by either bilinear interpolation or nearest neighbor from texture pixels.
+		Here to implement texture mapping, I used barycentric coordinates to convert my (x,y) Cartesian coordinate points into texture coordinate space (u,v) points, and then map them to a color in the texture, obtained by either nearest sampling or bilinear interpolation.
+		Nearest sampling simply takes the nearest pixel's Color in texture space (texel) by rounding my (u,v) values I got before.
+		Bilinear interpolation takes a weighted average of the 4 nearest texels' RGB values based on how far they are from my (u,v) point.
+		<br><br>
+		For my images generated below, you can notice that the lines look much smoother in the Bilinear interpolation sampling stategy versus nearest sampling.
+		This is especially noticeable at sample rate = 1, but noticeable throughout the entirety of the images. This is due to the nearest neighbor just grabbing the nearest texel's color, which could not be a true representation of its color, especially if it is directly in the middle of two texels. Taking a weighted average like in bilinear interpolation makes a much cleaner image!
 		<br><br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="screenshot_2-19_23-25-36.png" width="400px"/>
+				  <img src="screenshot_2-19_23-47-30.png" width="400px"/>
 				  <figcaption>Nearest Sample Rate = 1</figcaption>
 				</td>
 				<td style="text-align: center;">
-					<img src="screenshot_2-19_23-25-40.png" width="400px"/>
-					<figcaption>Nearest Sample Rate = 16.</figcaption>
+					<img src="screenshot_2-19_23-47-34.png" width="400px"/>
+					<figcaption>Nearest Sample Rate = 16</figcaption>
 				  </td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="screenshot_2-19_23-25-45.png" width="400px"/>
-				  <figcaption>Linear Sample Rate = 1</figcaption>
+				  <img src="screenshot_2-19_23-47-37.png" width="400px"/>
+				  <figcaption>Bilinear Sample Rate = 1</figcaption>
 				</td>
 				<td style="text-align: center;">
-					<img src="screenshot_2-19_23-25-48.png" width="400px"/>
-					<figcaption>Linear Sample Rate = 16</figcaption>
+					<img src="screenshot_2-19_23-47-40.png" width="400px"/>
+					<figcaption>Bilinear Sample Rate = 16</figcaption>
 				</td>
 			  </tr>
 			</table>
