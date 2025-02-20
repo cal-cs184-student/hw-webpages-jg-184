@@ -202,7 +202,30 @@
 		</div>
 
 		<h2>Task 4: Barycentric coordinates</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		In my own words, barycentric coordinates are simply a different coordinate system to describe points within a triangle (here).
+		We can assign coefficients to weight the impact of each triangle vertex on the point we are currently in.
+		The way I think about this is we have 
+		<br><b>point = alpha * V0 + beta * V1 + gamma * V2</b><br>
+		When the point is super close to V0 (vertex 0), alpha approaches 1. Vice versa for the other vertices.
+		Having distinct weights on each vertex allows us to describe any point within the triangle, without using the Cartesian coordinate system.
+		Using this same thought process, we can weight the color of each point within the triangle by the color of the vertices it is close to.
+		Using the triangle I drew below, we know that points in the triangle closest to the green vertex are going to be more green. Using this we can assing colors nicely to shapes, for example the triangle I just mentioned. 
+
+		<br> <br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="screenshot_2-19_21-32-17.png" width="400px"/>
+				  <figcaption>Color wheel!</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="screenshot_2-19_21-31-54.png" width="400px"/>
+					<figcaption>Triangle with Red, Green, and Blue vertices with interpolated colors</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
