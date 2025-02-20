@@ -47,7 +47,8 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		In this homework, I rasterized triangles, implemented supersampling, pixel sampling, and level sampling, along with transformations. 
+		I learned a lot about converting between coordinate systems. The amount of math that goes into all of this is fascinating and seeing all of the simplifications you can make is great as well!
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
 		To rasterize triangles, you need to take a pixel and determine if it is within the bounds defined by the 3 points
@@ -271,7 +272,13 @@
 		<br><br>
 		When supersampling, there is a huge tradeoff for nicely antialiased images with memory usage. At least in my implementation, the sample buffer is huge, which requires a lot of memory to store. 
 		In speed, I think it would slow down the rendering of the image since it requires more accessing memory, but I have not had any slowdown at least to my interpretation. In terms of antialiasing, supersampling does an incredible job at getting rid of Jaggies.
-		With pixel sampling, we can map textures onto our scenes.  
+		With pixel sampling, we can map textures onto our scenes. To help antialias this, we implemented bilinear interpolation which took a weighted average of the texels around it. This made the image blend much nicer rather than having jaggier, inconsistent lines.
+		This did not seem to have a big memory cost or speed cost.
+		With level sampling we could map textures onto our scenes with different resolutions. To do this, we used our mipmap and got different levels of it for different parts of the image, 
+		and that is where we got the corresponding colors from. This helped a lot especially with making the scene smoother in certain areas (making water look more continual).
+		However, this came at a huge speed cost. Especially, with the interpolated levels it would take a second or two to load. Memory cost to store the different levels of mip maps could add up too. It also made the image burry than I would want in some places.
+		<br><br>
+		Overall this project allowed me to see the different antialiasing techniques used in computer graphics and the tradeoffs/benefits to using each of them in different situations.
 
 		<br><br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
