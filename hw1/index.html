@@ -261,7 +261,17 @@
 		</div>
 
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
-		
+		To my understanding, level sampling is using different resolutions of a texture to help portray the appropriate detail for a texture a pixel should be displaying. 
+		So when using the mipmap, smaller and smaller versions of the texture existed, so you could have very low resolution texture maps in the end. Here we use level sampling to 
+		try to create the correct amount of detail in an image from the texture. We do this multiple ways, by either sampling the nearest mipmap level set to our point or interpolating the closest two levels.
+		With the closest level set, I rounded to get it. For the linear interpolation, I floored it then added 1.
+		In the case with interpolating, I got more intermediate resolution textures, which allows for more blending which can be seen in the water in the images below. 
+		The water looks smoother, making it blend in more to the environment.
+
+		<br><br>
+		When supersampling, there is a huge tradeoff for nicely antialiased images with memory usage. At least in my implementation, the sample buffer is huge, which requires a lot of memory to store. 
+		In speed, I think it would slow down the rendering of the image since it requires more accessing memory, but I have not had any slowdown at least to my interpretation. In terms of antialiasing, supersampling does an incredible job at getting rid of Jaggies.
+		With pixel sampling, we can map textures onto our scenes.  
 
 		<br><br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -276,7 +286,7 @@
 					<figcaption>Nearest Level, Nearest, Sample Rate = 1</figcaption>
 				  </td>
 				<td style="text-align: center;">
-					<img src="screenshot_2-20_1-29-0.png" width="400px"/>
+					<img src="screenshot_2-20_1-50-29.png" width="400px"/>
 					<figcaption>Linear Level, Nearest, Sample Rate = 1</figcaption>
 				</td>
 			  </tr>
