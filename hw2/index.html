@@ -120,7 +120,27 @@
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		To compute the area-weighted vertex normals, I first had to figure out how to traverse all of the triangles connected to the vertex given.
+		The Half-Edge structure was extremely useful for this. So first, I would start at the vertex given and get one of the half edges that stems from it.
+		Next, we can get the other two vertices of the face by getting the next of this half edge, then the next of that one and then getting the vertices that those stem from.
+		Once I am on the third half edge (the next of this one would be where we started), then I go to the twin of this, which will be on the next face.
+		I started over again, and get the vertices and normals. I keep going until I got back to the half edge we started with.
+		After this, I divide the summed normal vector by the magnitude of it. This results in the final normal vector weighted by the area!
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Screenshot 2025-02-26 at 2.44.24 PM.png" width="400px"/>
+				  <figcaption>Flat shading</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-02-26 at 2.44.37 PM.png" width="400px"/>
+					<figcaption>Phong shading</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
 
 		<h3>Part 4: Edge flip</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
