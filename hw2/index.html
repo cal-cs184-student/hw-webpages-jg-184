@@ -143,7 +143,25 @@
 		</div>
 
 		<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		To implement the edge flip operation, I first drew out a diagram on what this would look like. I initially did not label any of the faces, vertices, edges, or half edges, which made this extremely challenging and resulted in infinite loops.
+		However, I was able to fix this by restarting from scratch and drawing out the diagram of the flip with all of the elements labeled properly. Doing so allowed me to easily change the Half-Edges where required to do so, which all of them should have their nexts be changed, but for the two on the edge being flipped I had to change their vertices, faces, and nexts.
+		To go about debugging, I really just drew this out on a piece of paper to understand what elements I was updating incorrectly or accidentally overwriting (for the reason I mentioned before). I was doing things like
+		the next of the edge given should be the twin's next next next. This was overly complicated and did not need to be, so I used the approach of labeling to debug and fix my issues. This was quite challenging to fix, but once I decided to be thorough and label everything, it became much much easier.
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Screenshot 2025-02-26 at 9.59.04 PM.png" width="400px"/>
+				  <figcaption>Some flips</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-02-26 at 9.59.28 PM.png" width="400px"/>
+					<figcaption>More flips</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
 
 		<h3>Part 5: Edge split</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
