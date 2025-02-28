@@ -164,7 +164,32 @@
 		</div>
 
 		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		The edge split operation takes an edge and creates a new edge connecting the two other vertices involved in the faces of the neighboring triangles at the midpoint of the initial edge. 
+		This in turn creates 2 new faces, 6 more half edges, 1 new vertex, and 3 more edges (our initial edge was cut in half, we need 3 more edges).
+		In total 2 triangles become 4 in this operation. I had a lot of challenges with seg faults due to not initially setting a value of the new elements created. If I didn't do this, it would segfault every single time which took some debugging to figure out and fix.
+		Being able to comment certain blocks to isolate issues was helpful as well. My best debugging tool was drawing out everything on a piece of paper and making sure I assigned everything correctly.
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Screenshot 2025-02-27 at 9.45.44 PM.png" width="400px"/>
+				  <figcaption>No operations</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-02-27 at 9.46.04 PM.png" width="400px"/>
+					<figcaption>Splits</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-02-27 at 9.48.34 PM.png" width="400px"/>
+					<figcaption>Flips and Splits</figcaption>
+				  </td>
+
+			  </tr>
+			</table>
+		</div>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
