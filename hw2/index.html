@@ -39,7 +39,7 @@
 		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw2-jg-1">https://github.com/cal-cs184-student/sp25-hw2-jg-1</a>
 
 		<figure>
-			<img src="teapot.png" alt="Teapot" style="width:50%"/>
+			<img src="Screenshot 2025-03-04 at 1.32.14 AM.png" alt="" style="width:50%"/>
 			<figcaption></figcaption>
 		</figure>
 
@@ -48,7 +48,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		Overall in this assignment, I generated Bezier Curves and Surfaces with de Casteljau's algorithm and later implemented edge flipping, splitting, and loop subdivision for triangle meshes. I faced diffculties with the halfedge data structure but ultimately understand it better now!
 
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
@@ -207,7 +207,9 @@
 		After loop subdivision, sharp corners and edges are less sharp, but they are still obviously there.
 		This makes the image not look as great, especially in the case of the cube, where the corners are very obviously with each subdivision.
 		However, if we pre-split each edge in the center of the square faces, we get a much more rounded and smooth looking cube.
-		This helps to reduce the effect of the sharp corners, which in turn makes these images look nicer.
+		This helps to reduce the effect of the sharp corners, which in turn makes these images look nicer. To my understanding the reasoning behind this has to do with how we are weighting the positions of our vertices.
+		With no edge splitting, there are few initial vertices, and these will in turn bear a lot of weight on each other. However, with more vertices, especially towards the center with edge splitting, we can make a much more normalized surface instead of having drastically different points that we have without pre-processing. 
+		To use edge flipping here, I tried to implement this to help pre-process the image, but the only thing I could accomplish was isolating the sharpness to fewer points on the cube. You could potentially use a combination of edge splitting and flips to accomplish smoother surfaces with pre-processing, but I think edge splitting is more powerful since we can actually create new vertices that distribute the weight of the original vertices more evenly.  
 
 		<br><br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -250,6 +252,26 @@
 				  <td style="text-align: center;">
 					<img src="Screenshot 2025-03-04 at 1.04.22 AM.png" width="400px"/>
 					<figcaption>(Pre-Split) Level 3</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Screenshot 2025-03-04 at 1.26.53 AM.png" width="400px"/>
+				  <figcaption>(Pre-Flipped) Level 0</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 1.27.03 AM.png" width="400px"/>
+					<figcaption>(Pre-Flipped) Level 1</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 1.27.09 AM.png" width="400px"/>
+					<figcaption>(Pre-Flipped) Level 2</figcaption>
+				  </td>
+				  <td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 1.27.19 AM.png" width="400px"/>
+					<figcaption>(Pre-Flipped) Level 3</figcaption>
 				  </td>
 			  </tr>
 			</table>
