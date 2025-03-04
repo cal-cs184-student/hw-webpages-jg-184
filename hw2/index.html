@@ -192,9 +192,72 @@
 		</div>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		For loop subdivision, I largely implemented the strategy devised in the comments on the method. First I calculated the new positions of the old vertices, by weighting them with the surrounding vertices' positions using its degree.
+		Next, I calculated the new vertices positions that would be created with the edge splitting. Then, I split every edge in the mesh. To make this not infinite loop, I made sure that I only split edges that were not flagged as being new. I would then flag all of the new edges created (as new) by traversing the halfedges.
+		Next, I flipped all of the edges that connected a new and old vertex by using the previously designated flags. Finally, I assigned the calculated positions into the vertices, new vertices got the positions stored in the edges they split (found the halfedge data structure) and old vertices got the positions stored in the vertex new position argument.
 
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
+		<br><br>
+		I had quite a challenging debugging journey throughout this part. First, I encountered an infinite loop, so I had to mass comment out different blocks of code to see which one would cause the loop. I fixed that by only splitting old edges.
+		Next, I had a tough time figuring out how to designate the new positions to the vertices, especially with new vertices, this was a challenging mental problem since we already compute the midpoint, just weighted differently in the previous part where I implemented edge splitting.
+		This took a while to figure out, but it actually ended up helping me detect the ultimate cause of all of my problems: edge flipping.
+		I had this weird (and terrible) bug where when checking if one vertex was old and one new when flipping them, the order I assigned the vertices and checked them could not be arbitrary. Once I figured this out, I was able to isolate the remainders of my bugs. One thing I had to change was the way I assigned the halfedge() inside of each edge when flipping. This had a huge impact, so I played around with these until I got the correct flipping for each edge.
+		Overall, the debugging took a lot of code rewriting, commenting, and printing out positions/booleans to determine the root of the problems.
+
+		<br><br>
+		After loop subdivision, sharp corners and edges are less sharp, but they are still obviously there.
+		This makes the image not look as great, especially in the case of the cube, where the corners are very obviously with each subdivision.
+		However, if we pre-split each edge in the center of the square faces, we get a much more rounded and smooth looking cube.
+		This helps to reduce the effect of the sharp corners, which in turn makes these images look nicer.
+
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Screenshot 2025-03-04 at 1.00.35 AM.png" width="400px"/>
+				  <figcaption>Level 0 Upsampling</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 12.59.43 AM.png" width="400px"/>
+					<figcaption>Level 1 Upsampling</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 12.59.57 AM.png" width="400px"/>
+					<figcaption>Level 2 Upsampling</figcaption>
+				  </td>
+				  <td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 1.00.08 AM.png" width="400px"/>
+					<figcaption>Level 3 Upsampling</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Screenshot 2025-03-04 at 1.03.47 AM.png" width="400px"/>
+				  <figcaption>(Pre-Split) Level 0</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 1.03.56 AM.png" width="400px"/>
+					<figcaption>(Pre-Split) Level 1</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 1.04.11 AM.png" width="400px"/>
+					<figcaption>(Pre-Split) Level 2</figcaption>
+				  </td>
+				  <td style="text-align: center;">
+					<img src="Screenshot 2025-03-04 at 1.04.22 AM.png" width="400px"/>
+					<figcaption>(Pre-Split) Level 3</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+		
+
+
+		<!-- <h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Additional Notes (please remove)</h2>
@@ -206,7 +269,7 @@
 					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
 				</ul>
 			</li>
-		</ul>
+		</ul> -->
 		</div>
 	</body>
 </html>
