@@ -90,7 +90,44 @@
 		</div>
 		
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		To construct the BVH, I first started by constructing the bounding box for all of the primitives designated from start to end. 
+		Next, I determined if this node could be a leaf node by seeing how many primitives composed the bounding box (I used a counter), if it was less than or equal to max leaf size, I returned the node, with the left and right set to null and start and end set to those passed in.  
+		Otherwise, this node was an internal node and we needed to split the primitives up into two parts.
+		For this distribution, I found the midpoint of the bounding box I created previously, then added primitives to lists containing other primitives less than that x value or greater than (I did this for every axis).
+		Then, I determined which axis had the biggest split and split along that axis, recursively calling construct_bvh with the start and end set to the lists I generated before, with the left becoming the left of midpoint list return value and the right becoming the right of midpoint list return value.
+		I chose this axis since I feel like it requires the least computation, it is just a single call to midpoint on the overall bbox, then iterating through the primitives, versus some more computationally intense heuristic. A challenge I faced with this was generating pointers on the stack, which would cause segfaults as soon as I tried to render. It took a while to figure this out, but with the help of people on Ed, I was able to!
+
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="dragon_screenshot_3-17_17-49-35.png" width="400px"/>
+				  <figcaption>Dragon</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="maxplanck_screenshot_3-17_17-47-7.png" width="400px"/>
+				  <figcaption>Max Plack</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="CBlucy_screenshot_3-17_17-49-9.png" width="400px"/>
+				  <figcaption>CB Lucy</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="blob_screenshot_3-17_17-49-59.png" width="400px"/>
+				  <figcaption>Blob</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<br><br>
+		Comparing with and without BVH acceleration. Cow: without = 2.5752s, with = 0.0272s. Banana: without = 0.6073s, with = 0.0242s.
+		CBGems: without = 0.0982s, with = 0.0410s. As we can see, there is a massive speedup for the Cow (100x). There are still great speedups for the Banana (30x) and CBGems (2x), but I think with the more complex the geometry the more beneficial BVH acceleration is.
+		With less complex geometry, it is not as costly to check every primitive (since there are less), whereas with larger/more detailed objects, it makes a huge difference how many times you check if a ray intersects a primitive.
+
 
 		<h2>Part 3: Direct Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
