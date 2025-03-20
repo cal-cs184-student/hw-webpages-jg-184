@@ -130,7 +130,71 @@
 
 
 		<h2>Part 3: Direct Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		For direct lighting with Uniform Hemisphere sampling, I first generated a random direction to sample on the hemisphere wj. Then, I got the BDSF evaluated at the incident (wj) and outgoing (w_out) directions. Next, I transformed this vector into world space and found the cos theta of the normal surface vector and wj by taking the dot product of the two.
+		After that I generated a new ray in the wj direction and used the BVH intersect method to determine whether or not the ray encounters an object. If it did, I got the emission from that object and used it as part of the Monte Carlo estimator. Since it was a uniform hemisphere sampler, the p(sample) = (1/2pi).
+
+		<br><br>
+		For direct lighting with Importance Sampling Lights, I first determined how many samples I needed per light (for point lights, this was just 1).
+		Then for each sample for each light, I sampled a direction towards the light using the light sampling function. I got cos theta using the dot product of the surface normal and wj as before. 
+		To short circuit this, if cos theta < 0 that means that the light is behind the point so we don't need to waste resources sampling there. We then cast a ray in the direction of wj and if it intersects something, it is a shadow ray, so it doesn't contribute to the estimator (0).
+		Finally, I use the bdsf of the object (transform wj into object space) to calculate the scattering given the w_out and wj. Finally, I add to the Monte Carlo estimator as before. 
+
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="spheres uniform.png" width="400px"/>
+				  <figcaption>Spheres, Uniform</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="spheres importance.png" width="400px"/>
+				  <figcaption>Spheres, Importance</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bunny uniform.png" width="400px"/>
+				  <figcaption>Bunny, Uniform</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bunny importance.png" width="400px"/>
+				  <figcaption>Bunny, Importance</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bunny 1 ray.png" width="400px"/>
+				  <figcaption>Light Rays = 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bunny 4 ray.png" width="400px"/>
+				  <figcaption>Light Rays = 4</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bunny 16 ray.png" width="400px"/>
+				  <figcaption>Light Rays = 16</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bunny 16 ray.png" width="400px"/>
+				  <figcaption>Light Rays = 64</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<br><br>
+		For the images generated with uniform hemisphere sampling, they appear much noisier, and look grainy. This is because we are sending light rays in uniformly random directions, with not great probability to hit lighting sources.
+		They also tend to be a bit darker due to this. However, when using important light sampling, we are able to generate rays in directions towards light sources, so we can determine much more efficiently whether or not light falls onto this point (if there is an object, this is a shadow, ray the light is blocked).
+		This causes the images to appear much sharper and brighter as well as can be seen above in both the bunny and the spheres.
 
 		<h2>Part 4: Global Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
