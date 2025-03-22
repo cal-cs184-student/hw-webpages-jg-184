@@ -137,7 +137,7 @@
 		For direct lighting with Importance Sampling Lights, I first determined how many samples I needed per light (for point lights, this was just 1).
 		Then for each sample for each light, I sampled a direction towards the light using the light sampling function. I got cos theta using the dot product of the surface normal and wj as before. 
 		To short circuit this, if cos theta < 0 that means that the light is behind the point so we don't need to waste resources sampling there. We then cast a ray in the direction of wj and if it intersects something, it is a shadow ray, so it doesn't contribute to the estimator (0).
-		Finally, I use the bdsf of the object (transform wj into object space) to calculate the scattering given the w_out and wj. Finally, I add to the Monte Carlo estimator as before. 
+		Finally, I use the bsdf of the object (transform wj into object space) to calculate the scattering given the w_out and wj. Finally, I add to the Monte Carlo estimator as before. 
 
 		<br><br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -197,7 +197,39 @@
 		This causes the images to appear much sharper and brighter as well as can be seen above in both the bunny and the spheres.
 
 		<h2>Part 4: Global Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		For my implementation of the indirect lighting function, I first covered the base case in global lighting, if max_bounces = 0 return zero_bounce lighting. Otherwise if we are accumulating bounces, call at_least_one_bounce and add zero_bounce, otherwise just call at_least_one_bounce with the ray passed in and the depth set to 1.
+		My logic inside of this is as follows: if the ray depth is above the max_ray_depth (bounces), return 0. I then calculated the one_bounce_radiance of the ray and the isect at this point. If the ray's depth was at the max_bounces, return the one bounce calculated before. Otherwise we begin the process of casting a new ray to have another bounce.
+		First, I sampled the bsdf to get an incident angle wj with probability pdf. Next, I converted this direction wj to world space, and generated a ray with depth + 1, direction wj, and hit_p as the origin.
+		If this ray didn't intersect another object, we are done and if we are accumulating bounces return the one bounce radiance, otherwise return 0.
+		Then we call at_least_one_bounce on the hit point, calculated from the ray at the time t of the intersection. We add this if accumulating light, scaled by the probability of continuing, cos theta, pdf, and the bsdf. Lots of recursion!
+
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="spheres_global.png" width="400px"/>
+				  <figcaption>Spheres, Global</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="dragon_global.png" width="400px"/>
+				  <figcaption>Dragon, Global</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="spheres_direct.png" width="400px"/>
+				  <figcaption>Spheres, Direct Only</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="spheres_indirect.png" width="400px"/>
+				  <figcaption>Spheres, Indirect Only</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		
+
 
 		<h2>Part 5: Adaptive Sampling</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -205,7 +237,7 @@
 		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		
-		<h2>Additional Notes (please remove)</h2>
+		<!-- <h2>Additional Notes (please remove)</h2>
 		<ul>
 			<li>You can also add code if you'd like as so: <code>code code code</code></li>
 			<li>If you'd like to add math equations, 
@@ -214,7 +246,7 @@
 					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
 				</ul>
 			</li>
-		</ul>
+		</ul> -->
 		</div>
 	</body>
 </html>
