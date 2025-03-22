@@ -32,13 +32,13 @@
 
 		<br>
 
-		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-jg-184/hw3/index.html">https://cal-cs184-student.github.io/hw-webpages-jg-184/hw3/index.html</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-jg-184/hw3/index.html">https://cal-cs184-student.github.io/hw-webpages-jg-184/hw3/index.html</a><br>
 		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw3-jg184-3
 		">https://github.com/cal-cs184-student/sp25-hw3-jg184-3
 	</a>
 		
 		<figure>
-			<img src="CBcoil_screenshot_3-15_23-32-48.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
+			<img src="spheres_speed.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
 			<figcaption></figcaption>
 		</figure>
 
@@ -47,7 +47,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		Overall, in this homework I implemented ray generation and ray intersection with triangles and spheres in the scene. Then I constructed a Bounding Volume Hierarchy for a scene to reduce the time it takes to render images when casting rays. Next I implemented direct lighting with zero and one bounce lighting. Then I implemented global lighting and used adaptive sampling to create smooth images.
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
 		For ray generation (task 1), we first start in camera space at the origin (where the camera is located there) and we want to look create a ray in the direction of the part of the image in camera space that corresponds to the point of the image in image space. 
@@ -201,7 +201,7 @@
 		My logic inside of this is as follows: if the ray depth is above the max_ray_depth (bounces), return 0. I then calculated the one_bounce_radiance of the ray and the isect at this point. If the ray's depth was at the max_bounces, return the one bounce calculated before. Otherwise we begin the process of casting a new ray to have another bounce.
 		First, I sampled the bsdf to get an incident angle wj with probability pdf. Next, I converted this direction wj to world space, and generated a ray with depth + 1, direction wj, and hit_p as the origin.
 		If this ray didn't intersect another object, we are done and if we are accumulating bounces return the one bounce radiance, otherwise return 0.
-		Then we call at_least_one_bounce on the hit point, calculated from the ray at the time t of the intersection. We add this if accumulating light, scaled by the probability of continuing, cos theta, pdf, and the bsdf. Lots of recursion!
+		Then we call at_least_one_bounce on the hit point, calculated from the ray at the time t of the intersection. We add this if accumulating light, scaled by the probability of continuing, cos theta, pdf, and the bsdf. Lots of recursion! I had a very hard time with this part, especially with wrapping my head around what my base cases should be and how to deal with complex situations, with not accumulating bounces versus accumulating. Overall, I was able to figure it out, but it was quite a challenge!
 
 		<br><br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -399,11 +399,39 @@
 		Comparing sample rates 1 and 1024, the difference is incredible, but also the rendering time was a huge difference as well.
 
 		<h2>Part 5: Adaptive Sampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		My understanding of adaptive sampling is that it is sampling, but it terminates once it generates a value for the pixel with a small 95% confidence interval, so with high confidence future samples are redundant and will result in the same or similar outputs.
+		This allows the runtime to be decreased when rendering since supersampling doesn't require all of the samples every time, especially for simpler parts of the images. My implementation was quite simple for this.
+		First, I calculated s1 and s2 as the spec recommended, then calculated the mean and standard deviation every 32 samples. I then calculated the convergence and determined if this value was low enough to stop sampling pixels. I then inputted the number of samples I took for each pixel in the sampleCounterBuffer. I kept going until I either sampled the number of samples necessary to converge or went to the sampling rate!
 
-		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bunny_rate.png" width="400px"/>
+				  <figcaption>Bunny, Samples</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bunny.png" width="400px"/>
+				  <figcaption>Bunny, Noise Free</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="spheres_speed_rate.png" width="400px"/>
+				  <figcaption>Spheres, Samples</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="spheres_speed.png" width="400px"/>
+				  <figcaption>Spheres, Noise Free</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<!-- <h2>(Optional) Part 6: Extra Credit Opportunities</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
+		 -->
 		<!-- <h2>Additional Notes (please remove)</h2>
 		<ul>
 			<li>You can also add code if you'd like as so: <code>code code code</code></li>
