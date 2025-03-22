@@ -228,6 +228,10 @@
 			  </tr>
 			</table>
 		</div>
+		<br>
+		The spheres with the direct lighting only is very harsh and bright light. With indirect lighting, the image is much darker, but there is more of a blend of colors seen.
+		Neither image accurately captures the scene but when combining them it makes a nice, well-blended image.
+		<br>
 
 		<br>
 		Now for the bunny, with unaccumulated bounces!
@@ -267,7 +271,13 @@
 			  </tr>
 			</table>
 		</div>
+		<br>
+		For the second and third bounces of light, there is a huge drop off in the brightness of the overall image.
+		They both blend the colors of the scene, but the two bounces shows this more clearly. That color blending contributes heavily to the overall image when accumulating bounces.
+		The two bounces has a much stronger impact on the image as composed to the three bounces image. This increases the quality of the image signifigantly, it looks far more realisitic, with further bounces not contributing as much.
+		Compared to rasterization, the lighting looks nice, it is not just a solid color composed of surface normals/colors. It helps make a smoother image and looks great.
 
+		<br>
 		<br>
 		Bunny with accumulating bounces!
 		<br><br>
@@ -305,7 +315,10 @@
 			  </tr>
 			</table>
 		</div>
-
+		<br>
+		The cumulative images all look somewhat similar after m = 2 because as I mentioned earlier, the more bounces, the less signifigant of an impact it has on the image. If anything
+		the m = 5 image should be brighter ever so slightly compared to m = 2. m = 1 is just the result from one bounce light, so it doesn't have that nice color blending effect we see in greater bounce images.
+		<br>
 		<br>
 		Now, Russian Roulette samples with probability of termination = 0.3
 		<br><br>
@@ -381,8 +394,9 @@
 			  </tr>
 			</table>
 		</div>
-		
-
+		<br>
+		There is a huge difference in the quality of these images. As seen with previous homeworks, being able to supersample drastically increases the quality of the images, even with the lower light ray count.
+		Comparing sample rates 1 and 1024, the difference is incredible, but also the rendering time was a huge difference as well.
 
 		<h2>Part 5: Adaptive Sampling</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
