@@ -137,7 +137,42 @@
 		<br><br>
 
 		<h2>Part 3: Handling collisions with other objects</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		My implementation of collisions with spheres is as follows: first, I determined if the position was inside of the sphere, by getting the distance from the center of the sphere to the position and seeing if that was less than the radius of the sphere (inside of the sphere).
+		Then I got the unit vector from the sphere's center to the position and multiplied that by the radius and finally adding that to the sphere's center, getting the point on the surface of the sphere. 
+		Finally, I calculated the correction vector from the last position to the point on the sphere, and added that to the last position, scaled by friction to get the new position.
+		<br><br>
+		My implementation of collisions with planes is as follows: first, I determined if the new position actually passed through the plane. To do this, I used the logic that if the dot product of the Normal and the vector from any point on the plane to the point of interest is positive, then both vectors are pointing above the plane, and if it is zero the point of interest is on the plane, and if negative, it is below the plane.
+		If it changed signs, this means it crossed the plane, which needs correcting. I used similar logic of ray-plane intersection to find the tangent point where the "ray" intersects the plane.
+		The origin was the last position, the direction was the unit vector from the last pos to the pos. Solving for the time of intersection with the plane, I got the tangent point.
+		From there, I got the correction vector by getting the tangent point - last pos. Then there was a correction, which was the normal multiplied by SURFACE_OFFSET, in the direction of the last pos. The correction vector was then added to the offset, which was then scaled by the friction, and added to the last position.
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 3/cloth.png" width="400px"/>
+				  <figcaption>Cloth on plane</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 3/ks = 5000.png" width="400px"/>
+				  <figcaption>ks = 5,000</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 3/ks = 500.png" width="400px"/>
+				  <figcaption>ks = 500</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 3/ks = 50000.png" width="400px"/>
+				  <figcaption>ks = 50,000</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br>
+		Cloth ks differences: with a low spring constant, there is not a lot holding the cloth together, it looks like it is almost completely at will to gravity and the only thing stopping it is the sphere. It is very floppy.
+		With a high ks, there is a lot more holding the cloth together, it is more planar, less being at full will to gravity, a huge difference to the low ks state. The medium state is in between, not completely floppy, but also not very planar.
 
 		<h2>Part 4: Handling self-collisions</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
