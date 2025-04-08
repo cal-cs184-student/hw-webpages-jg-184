@@ -175,12 +175,99 @@
 		With a high ks, there is a lot more holding the cloth together, it is more planar, less being at full will to gravity, a huge difference to the low ks state. The medium state is in between, not completely floppy, but also not very planar.
 
 		<h2>Part 4: Handling self-collisions</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		My implementation for handling self collisions is as follows: first, I implemented the hash function, where I took the Point Mass's position and used fmod to truncate them into the 3D box space. Next, I used those truncated coordinates and scaled them each by either the num_width_points or num_height_points and floored them, giving the coordinates of the 3D box.
+		To generate the float corresponding to this box I multiplied the coordinates together. The map was constructed using this hash function, assigning all the point masses to a unique floating point value from the hash function.
+		Finally, for each point mass, all of the other point masses with the same floating point key (3D box), if the distance was less than 2 * thickness, then a repulsive force would be applied, making it no longer clip itself!
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 4/Early.png" width="400px"/>
+				  <figcaption>Early</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 4/Initial self-collision 1.png" width="400px"/>
+				  <figcaption>Initial self-collision 1</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 4/Initial self-collision 2.png" width="400px"/>
+				  <figcaption>Initial self-collision 2</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 4/Rest.png" width="400px"/>
+				  <figcaption>More restful state</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<br>
+		With low density, the cloth fell and sat on top of itself very nicely, with large folds and space in between them. It did not compress much and stayed relatively spread out.
+		With high density, the cloth fell on top of itself, almost compressing itself while falling, as can be seen by the picture. At rest the folds were not large at all and the point masses were all very close to each other, representing how much heavier this one was.
+		<br><br>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 4/low density mid.png" width="400px"/>
+				  <figcaption>Low density mid air</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 4/low density rest.png.png" width="400px"/>
+				  <figcaption>Low density at rest</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 4/high density mid.png" width="400px"/>
+				  <figcaption>High density mid air</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 4/high density rest.png" width="400px"/>
+				  <figcaption>High density at rest</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<br>
+		With low ks, it was similar to the high density situation where it was very squished on top of itself and was compressed heavily.
+		With high ks, it was similar to the low density situation, with nice folds, and large spaces between the folds, looking more relaxed.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 4/low ks mid.png" width="400px"/>
+				  <figcaption>Low ks mid air</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 4/low ks rest.png" width="400px"/>
+				  <figcaption>Low ks at rest</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 4/high ks mid.png" width="400px"/>
+				  <figcaption>High ks mid air</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 4/high ks rest.png" width="400px"/>
+				  <figcaption>High ks at rest</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+	
 
 		<h2>Part 5: Shaders</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
+		<!-- <h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		
 		<h2>Additional Notes (please remove)</h2>
@@ -192,7 +279,7 @@
 					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
 				</ul>
 			</li>
-		</ul>
+		</ul> -->
 		</div>
 	</body>
 </html>
