@@ -265,7 +265,78 @@
 		</div>
 	
 		<h2>Part 5: Shaders</h2>
+		To my understanding, a shader program is a program that modifies vertex positions to change the geometry of an object or the colors displayed by pixels using different effects (diffuse/mirror/specular/etc) from the scene to create nice visuals.
+		To actually create these visual effects, both the vertex and fragment shaders must work together. Vertex shaders are exactly what they sound like, they modify the vertices and are capable of changing the geometry of an object, to make a material effect, as will be seen with the displacement shader I implemented later.
+		Fragment shaders work on the display colors of the pixels, calculating these through different effects such as diffuse lighting, Blinn-Phong shading, or mirror effects. The fragment shader must utilize the output from the vertex shader to actually compute these colors as the vertex positions and normals are crucial to calculating the visual effects.
+		<br><br>
+		The Blinn-Phong shading model combines several different types of shading to create a very nice final image.
+		Blinn-Phong sums Ambient Lighting, Diffuse Lighting, and Specular Lighting to accomplish this.
+		Ambient shading is constant color from an object, independent of viewing direction and any other lighting.
+		Diffuse shading is shading on an object that is independent of viewing direction. This light is diffused (evenly distributed) across the hemisphere and reaches the camera.
+		Specular shading is shading that is dependent on viewing direction and the light source, this is almost like the shininess of an object.
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/blinn-phong.png" width="400px"/>
+				  <figcaption>Blinn-Phong</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/ambient only.png" width="400px"/>
+				  <figcaption>Ambient only</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/diffuse only.png" width="400px"/>
+				  <figcaption>Diffuse only</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/specular only.png" width="400px"/>
+				  <figcaption>Specular only</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/blinn-phong cloth.png" width="400px"/>
+				  <figcaption>Blinn-Phong with cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/ambient only cloth.png" width="400px"/>
+				  <figcaption>Ambient only with cloth</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/diffuse only cloth.png" width="400px"/>
+				  <figcaption>Diffuse only with cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/specular only cloth.png" width="400px"/>
+				  <figcaption>Specular only with cloth</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br> I changed the texture to be a snowboarder! <br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/snowboard.png" width="400px"/>
+				  <figcaption>Snowboard</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/snowboard cloth.png" width="400px"/>
+				  <figcaption>Snowboard with cloth</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
+
+		
 
 		<!-- <h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
