@@ -39,7 +39,7 @@
 		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw4-jg-184-4">https://github.com/cal-cs184-student/sp25-hw4-jg-184-4</a>
 
 		<figure>
-			<img src="clothsim.png" alt="Cloth draped over sphere" style="width:70%"/>
+			<img src="Part 4/low density rest.png" alt="Cloth draped over sphere" style="width:70%"/>
 			<figcaption></figcaption>
 		</figure>
 
@@ -339,6 +339,8 @@
 		For the bump approach, I am solely changing the fragment shader, so I am just modifying the pixel color outputs to represent the bumps, not actually modifying the outputs of the pixels.
 		Adding the bumps just gives the illusion that there are bumps here. However with the displacement approach, both the illusion is produced and the geometry is changed, complimenting it very well.
 		As you can see with the displacement image, it is no longer a perfect sphere, it has been modified, with the little dents in it as seen below. Overall, the displacement images have distorted geometries, while the bump images do not, while both produce a visual effect of bumps.
+		With the coarseness at 16 vs 128 with the bump shader, at 128 it is actually more round. You can see the actual geometry looks more round, which is nice looking.
+		For the displacement shader at 16 vs 128, 128 is actually more distorted, further pushing it away from its spherical geometry, exaggerating the effect seen at 16 (where it was barely distorted). At 16 you could barely tell the difference between the two shader methods but at 128 there is a harsh contrast in the geometries. 
 		<br><br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -385,6 +387,32 @@
 			</table>
 		</div>
 
+		<br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/mirror on sphere.png" width="400px"/>
+				  <figcaption>Mirror on Sphere</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/mirror as it gets closer.png" width="400px"/>
+				  <figcaption>Mirror on Sphere and Plane</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/mirror on cloth.png" width="400px"/>
+				  <figcaption>Mirror with cloth over</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/mirror from above cloth.png" width="400px"/>
+				  <figcaption>Mirror from above plane</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br>
 
 		
 
