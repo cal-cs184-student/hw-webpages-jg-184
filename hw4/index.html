@@ -334,6 +334,56 @@
 			  </tr>
 			</table>
 		</div>
+		<br>
+		I used the picnic table esque texture for this! I also made it green to represent the bump and blue to represent the displacement because its more fun than gray!
+		For the bump approach, I am solely changing the fragment shader, so I am just modifying the pixel color outputs to represent the bumps, not actually modifying the outputs of the pixels.
+		Adding the bumps just gives the illusion that there are bumps here. However with the displacement approach, both the illusion is produced and the geometry is changed, complimenting it very well.
+		As you can see with the displacement image, it is no longer a perfect sphere, it has been modified, with the little dents in it as seen below. Overall, the displacement images have distorted geometries, while the bump images do not, while both produce a visual effect of bumps.
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/bump both.png" width="400px"/>
+				  <figcaption>Bump: cloth & plane</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/bump cloth over.png" width="400px"/>
+				  <figcaption>Bump: cloth over</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/displacement both.png" width="400px"/>
+				  <figcaption>Displacement: cloth & plane</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/displacement cloth over.png" width="400px"/>
+				  <figcaption>Displacement: cloth over</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/16 bump.png" width="400px"/>
+				  <figcaption>Bump -o 16 -a 16</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/16 displacement.png" width="400px"/>
+				  <figcaption>Displacement -o 16 -a 16</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Part 5/128 bump.png" width="400px"/>
+				  <figcaption>Bump -o 128 -a 128</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Part 5/128 displacement.png" width="400px"/>
+				  <figcaption>Displacement -o 128 -a 128</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 
 		
